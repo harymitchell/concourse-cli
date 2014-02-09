@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+repositories {
+   mavenCentral()
+}
+
+dependencies {
+	compile 'org.cinchapi:concourse:0.3.0+'
+    compile 'org.cinchapi:concourse-config-framework:1.0.0'
+    testCompile 'junit:junit:4.11'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.8'
+}
