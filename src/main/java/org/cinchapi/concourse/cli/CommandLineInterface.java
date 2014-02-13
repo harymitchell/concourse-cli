@@ -69,7 +69,7 @@ public abstract class CommandLineInterface {
      * 
      * @param args
      */
-    public CommandLineInterface(String... args) {
+    public CommandLineInterface(String[] args) {
         this(new Options(), args);
     }
 
