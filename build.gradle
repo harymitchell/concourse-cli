@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
 	compile 'org.cinchapi:concourse:0.3.0+'
-    compile 'org.cinchapi:concourse-config-framework:1.0.0'
+    compile 'org.cinchapi:concourse-config:1.0.0'
     compile 'com.beust:jcommander:1.32'
     compile 'jline:jline:2.11'
     testCompile 'junit:junit:4.11'
