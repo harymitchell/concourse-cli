@@ -67,13 +67,15 @@ After defining your Options, you must define the class that will do the work ass
     	}
 
 	}
+	
+**NOTE:** You should **not** call `System.exit()` from the `doTask()` method because this is handled by the framework. If there is a failure, you should throw a `RuntimeException` from the method. Otherwise, the CLI is considered to have suceeded.
 
 
 ## Shell Script
-The CLI can be launched from the command line using Java; however, it is usually desirable to create a shell script that handles proper path setting, etc for the user.
+The CLI can be launched from the command line using Java; however, it is usually desirable to create a shell script that handles proper path setting, etc.
 
 ### The main script
-Use the basic template below for defining shell script that run your CLI. You'll want to change the $CLI and $CLASSPATH definitions. This script ensures that the proper path is called and that any additional arguments passed to the CLI are passed to the appropriate Java code.
+Use the basic template below for defining a shell script that run your CLI. **You'll want to change the $CLI and $CLASSPATH definitions**. This script ensures that the proper path is called and that any additional arguments passed to the CLI are passed to the appropriate Java code.
 
 ###### sample.sh
 
@@ -93,7 +95,7 @@ Use the basic template below for defining shell script that run your CLI. You'll
 	exec $JAVACMD -classpath "$CLASSPATH" org.cinchapi.concourse.cli.CommandLineInterfaceRunner $CLI "$@"
 
 ### Environment configuration script
-Be sure to define a script that properly defines the environment in which the shell script run. This configuration is highly variable depending on the context, but here is an example of what we use for the shell scripts in concourse-server
+Be sure to define a script that properly defines the environment in which the shell script run and sets the appropriate paths. For example, you need to make sure that the **concourse-cli** jar is on the classpath. CLI configuration is highly variable depending on the context of the application, but here is an example of what we use for the shell scripts in the concourse-server project.
 
 ######.env
 	#!/usr/bin/env bash
@@ -227,4 +229,4 @@ Be sure to define a script that properly defines the environment in which the sh
 	# Set CLASSPATH
 	CLASSPATH="$APP_HOME/lib/*"
 	
-
+**NOTE:** The .env script assumes it and the called CLI are located in a subdirectory of the application home. It also assumes that the *concourse-cli* jar and other resources are located in another subdirectory of the application home called *lib*.
