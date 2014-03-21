@@ -8,8 +8,8 @@ repositories {
 }
 
 dependencies {
-	compile 'org.cinchapi:concourse:0.3.0+'
-    compile 'org.cinchapi:concourse-config:1.0.0'
+	compile 'org.cinchapi:concourse:0.3.2+'
+    compile 'org.cinchapi:concourse-config:1.0.2'
     compile 'com.beust:jcommander:1.32'
     compile 'jline:jline:2.11'
     testCompile 'junit:junit:4.11'
@@ -78,7 +78,7 @@ uploadArchives {
               authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
 
-            pom.version = '1.0.0'
+            pom.version = '1.0.1'
 
             pom.project {
                name 'Concourse Configuration Framework'

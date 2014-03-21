@@ -1,12 +1,12 @@
 # concourse-cli
 
-This is framewoork for defining **client side** command line interface scripts that interact with **Concourse**. This is *not* a general purpose framework for defining Java command line interfaces!
+The concourse-cli framework allows third party developers to define **client side** command line interfaces that interact directly with **Concourse**.
 
 ## General Information
 
 ### Versioning
 
-This is version 1.0.0 of the concourse-config-framework.
+This is version 1.0.1 of the concourse-config-framework.
 
 This project will be maintained under the [Semantic Versioning](http://semver.org)
 guidelines such that release versions will be formatted as `<major>.<minor>.<patch>`
