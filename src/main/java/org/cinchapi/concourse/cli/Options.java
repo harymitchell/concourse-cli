@@ -38,22 +38,22 @@ import com.beust.jcommander.Parameter;
  */
 public class Options {
 
-    @Parameter(names = { "-h", "--help" }, help = true, hidden = true)
+    @Parameter(names = "--help", help = true, hidden = true)
     public boolean help;
 
     @Parameter(names = { "-u", "--username" }, description = "The username with which to connect")
     public String username = "admin";
 
-    @Parameter(names = "--password", description = "The password", password = true, hidden = true)
+    @Parameter(names = "--password", description = "The password", hidden = true)
     public String password;
 
-    @Parameter(names = "--port", description = "The port on which Concourse is listening")
+    @Parameter(names = { "-p", "--port" }, description = "The port on which the Concourse Server is listening")
     public int port = 1717;
 
-    @Parameter(names = "--host", description = "The host of the Concourse server")
+    @Parameter(names = { "-h", "--host" }, description = "The host of the Concourse Server")
     public String host = "localhost";
 
-    @Parameter(names = { "-p", "--prefs" }, description = "Path to the concourse_client.prefs file")
+    @Parameter(names = "--prefs", description = "Path to the concourse_client.prefs file")
     public String prefs;
 
 }

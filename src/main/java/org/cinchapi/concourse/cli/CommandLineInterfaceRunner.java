@@ -89,7 +89,7 @@ public final class CommandLineInterfaceRunner {
             // user did not pass in a required arg, etc).
             if(e instanceof ReflectiveOperationException
                     && e.getCause().getMessage() != null) {
-                System.err.print(MessageFormat.format("ERROR: {0}", e
+                System.err.println(MessageFormat.format("ERROR: {0}", e
                         .getCause().getMessage()));
             }
             System.exit(1);

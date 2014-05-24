@@ -93,6 +93,10 @@ public abstract class CommandLineInterface {
             parser.setProgramName(CaseFormat.UPPER_CAMEL.to(
                     CaseFormat.LOWER_HYPHEN, this.getClass().getSimpleName()));
             this.console = new ConsoleReader();
+            if(options.help) {
+                parser.usage();
+                System.exit(1);
+            }
             // must get creds in constructor in case subclass tries to connect
             // to Concourse in its constructor
             if(!Strings.isNullOrEmpty(options.prefs)) {
@@ -119,11 +123,7 @@ public abstract class CommandLineInterface {
      * Run the CLI. This method should only be called from the main method.
      */
     public final int run() {
-        try {
-            if(options.help) {
-                parser.usage();
-                System.exit(1);
-            }
+        try {            
             doTask();
             return 0;
         }
