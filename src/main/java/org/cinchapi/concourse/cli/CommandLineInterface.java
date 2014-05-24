@@ -123,7 +123,7 @@ public abstract class CommandLineInterface {
      * Run the CLI. This method should only be called from the main method.
      */
     public final int run() {
-        try {            
+        try {
             doTask();
             return 0;
         }
