@@ -108,7 +108,8 @@ public abstract class CommandLineInterface {
                 options.port = prefs.getPort();
             }
             else if(Strings.isNullOrEmpty(options.password)) {
-                options.password = console.readLine("Password: ", '*');
+                options.password = console.readLine("Password ["
+                        + options.username + "]: ", '*');
             }
         }
         catch (ParameterException e) {

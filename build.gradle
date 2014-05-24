@@ -78,7 +78,7 @@ uploadArchives {
               authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
 
-            pom.version = '1.0.2'
+            pom.version = '1.0.3'
 
             pom.project {
                name 'Concourse Configuration Framework'
