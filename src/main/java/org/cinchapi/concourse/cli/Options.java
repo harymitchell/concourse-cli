@@ -53,6 +53,9 @@ public class Options {
     @Parameter(names = { "-h", "--host" }, description = "The host of the Concourse Server")
     public String host = "localhost";
 
+    @Parameter(names = { "-e", "--environment" }, description = "The environment of the Concourse Server to use")
+    public String environment = "";
+
     @Parameter(names = "--prefs", description = "Path to the concourse_client.prefs file")
     public String prefs;
 
