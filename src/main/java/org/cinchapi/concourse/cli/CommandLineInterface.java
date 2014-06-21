@@ -93,6 +93,7 @@ public abstract class CommandLineInterface {
             parser.setProgramName(CaseFormat.UPPER_CAMEL.to(
                     CaseFormat.LOWER_HYPHEN, this.getClass().getSimpleName()));
             this.console = new ConsoleReader();
+            this.console.setExpandEvents(false);
             if(options.help) {
                 parser.usage();
                 System.exit(1);
