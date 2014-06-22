@@ -107,6 +107,7 @@ public abstract class CommandLineInterface {
                 options.password = new String(prefs.getPassword());
                 options.host = prefs.getHost();
                 options.port = prefs.getPort();
+                options.environment = prefs.getEnvironment();
             }
             else if(Strings.isNullOrEmpty(options.password)) {
                 options.password = console.readLine("Password ["

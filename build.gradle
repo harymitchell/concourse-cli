@@ -8,8 +8,8 @@ repositories {
 }
 
 dependencies {
-	compile 'org.cinchapi:concourse:0.3.2+'
-    compile 'org.cinchapi:concourse-config:1.0.2'
+	compile 'org.cinchapi:concourse:0.3.4'
+    compile 'org.cinchapi:concourse-config:1.0.4'
     compile 'com.beust:jcommander:1.32'
     compile 'jline:jline:2.11'
     testCompile 'junit:junit:4.11'
