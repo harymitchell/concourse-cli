@@ -23,6 +23,12 @@
  */
 package org.cinchapi.concourse.cli;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.cinchapi.concourse.config.ConcourseClientPreferences;
+
 import com.beust.jcommander.Parameter;
 
 /**
@@ -38,23 +44,41 @@ import com.beust.jcommander.Parameter;
  */
 public class Options {
 
-    @Parameter(names = "--help", help = true, hidden = true)
-    public boolean help;
+    /**
+     * A handler for the client preferences that <em>may</em> exist in the
+     * user's home directory.
+     */
+    private ConcourseClientPreferences prefsHandler = null;
 
-    @Parameter(names = { "-u", "--username" }, description = "The username with which to connect")
-    public String username = "admin";
+    {
+        String file = System.getProperty("user.home") + File.separator
+                + "concourse_client.prefs";
+        if(Files.exists(Paths.get(file))) { // check to make sure that the
+                                            // file exists first, so we
+                                            // don't create a blank one if
+                                            // it doesn't
+            prefsHandler = ConcourseClientPreferences.load(file);
+        }
+    }
 
-    @Parameter(names = "--password", description = "The password", hidden = true)
-    public String password;
+    @Parameter(names = { "-h", "--host" }, description = "The hostname where the Concourse Server is located")
+    public String host = prefsHandler != null ? prefsHandler.getHost()
+            : "localhost";
 
     @Parameter(names = { "-p", "--port" }, description = "The port on which the Concourse Server is listening")
-    public int port = 1717;
+    public int port = prefsHandler != null ? prefsHandler.getPort() : 1717;
 
-    @Parameter(names = { "-h", "--host" }, description = "The host of the Concourse Server")
-    public String host = "localhost";
+    @Parameter(names = { "-u", "--username" }, description = "The username with which to connect")
+    public String username = prefsHandler != null ? prefsHandler.getUsername()
+            : "admin";
+
+    @Parameter(names = "--password", description = "The password", password = false, hidden = true)
+    public String password = prefsHandler != null ? new String(
+            prefsHandler.getPassword()) : null;
 
     @Parameter(names = { "-e", "--environment" }, description = "The environment of the Concourse Server to use")
-    public String environment = "";
+    public String environment = prefsHandler != null ? prefsHandler
+            .getEnvironment() : "";
 
     @Parameter(names = "--prefs", description = "Path to the concourse_client.prefs file")
     public String prefs;
