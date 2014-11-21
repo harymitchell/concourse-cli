@@ -6,7 +6,7 @@ The concourse-cli framework allows third party developers to define **client sid
 
 ### Versioning
 
-This is version 1.1.1 of the concourse-config-framework.
+This is version 1.1.2 of the concourse-config-framework.
 
 This project will be maintained under the [Semantic Versioning](http://semver.org)
 guidelines such that release versions will be formatted as `<major>.<minor>.<patch>`
