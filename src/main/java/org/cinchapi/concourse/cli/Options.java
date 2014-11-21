@@ -60,6 +60,9 @@ public class Options {
             prefsHandler = ConcourseClientPreferences.load(file);
         }
     }
+    
+    @Parameter(names = { "--help" }, help = true, hidden = true)
+    public boolean help;
 
     @Parameter(names = { "-h", "--host" }, description = "The hostname where the Concourse Server is located")
     public String host = prefsHandler != null ? prefsHandler.getHost()
