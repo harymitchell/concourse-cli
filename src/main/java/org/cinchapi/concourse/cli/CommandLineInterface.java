@@ -25,6 +25,8 @@ package org.cinchapi.concourse.cli;
 
 import java.io.IOException;
 
+import org.apache.thrift.TApplicationException;
+import org.cinchapi.concourse.Concourse;
 import org.cinchapi.concourse.config.ConcourseClientPreferences;
 
 import jline.console.ConsoleReader;
@@ -43,7 +45,33 @@ import com.google.common.base.Strings;
  * @author jnelson
  */
 public abstract class CommandLineInterface {
-
+   
+	/**
+     * Internal {@link Concourse} instance for interface.
+     */
+	private Concourse concourse; 
+	
+	/**
+	 * Access to  {@link #concourse} instance.
+	 * @return
+	 */
+	public final Concourse getConcourse(){
+		return concourse;
+	}
+	
+	/**
+	 * The number of login attempts remaining before system will exit.
+	 */
+	private int loginAttemptsRemaining;
+	
+	/**
+	 * Setter for {@link #loginAttemptsRemaining}.
+	 * @param loginAttemptsRemaining
+	 */
+	public final void setLoginAttemptsRemaining (int loginAttemptsRemaining){
+		this.loginAttemptsRemaining = loginAttemptsRemaining;
+	}
+	
     /**
      * The CLI options.
      */
@@ -58,6 +86,11 @@ public abstract class CommandLineInterface {
      * Handler to the console for interactive I/O.
      */
     protected ConsoleReader console;
+
+    /**
+     * Have all attempts to instantiate {@link #concourse} failed?
+     */
+    protected boolean isLoginFailed;
 
     /**
      * Construct a new instance.
@@ -110,8 +143,7 @@ public abstract class CommandLineInterface {
                 options.environment = prefs.getEnvironment();
             }
             else if(Strings.isNullOrEmpty(options.password)) {
-                options.password = console.readLine("Password ["
-                        + options.username + "]: ", '*');
+            	setPasswordFromConsole();
             }
         }
         catch (ParameterException e) {
@@ -154,5 +186,56 @@ public abstract class CommandLineInterface {
      * </p>
      */
     protected abstract void doTask();
-
+    
+    /**
+     * Reads a password from {@link #console} to set for {@link #options} password.
+     * @throws IOException
+     */
+    private void setPasswordFromConsole () {
+        try {
+			options.password = console.readLine("Password ["
+			        + options.username + "]: ", '*');
+		} catch (IOException e) {
+            die(e.getMessage());		
+		}
+    }
+    
+    /**
+     * Connect to {@value #concourse} with options,
+     * call upon {@link #handleInvalidLogin()} to handle a retry.
+     * @throws IOException 
+     */
+	protected void connectToConcourse() {
+        try{
+        	concourse = (Concourse.connect(options.host, options.port, options.username, options.password));
+        }
+        catch (RuntimeException e){
+        	if (e.getCause() instanceof TApplicationException){
+        		handleInvalidLogin();
+        	}
+        }	
+	}
+	
+	/**
+	 * Handle an invalid login: 
+	 * 		1) decrementing {@link #loginAttemptsRemaining}.
+	 * 		2) prompt for a new password.
+	 * 		3) re-attempt {@link #connectToConcourse()}.
+	 * 
+	 * If {@link #loginAttemptsRemaining} has expired, then flag {@link #isLoginFailed}.
+	 * 
+	 * @throws IOException
+	 */
+	private void handleInvalidLogin() {
+		loginAttemptsRemaining -= 1;
+		if (loginAttemptsRemaining > 0){
+    		System.err.println ("Error processing login.  Please check username/password combination and try again.");
+    		setPasswordFromConsole();
+    		connectToConcourse();
+		}
+		else {
+			isLoginFailed = true;
+    		System.err.println ("Error processing login.  Please check username/password combination and try again.");
+		}		
+	}
 }

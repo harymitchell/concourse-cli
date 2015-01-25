@@ -54,9 +54,9 @@ artifacts {
 	archives javadocJar
 }
 
-signing {
-    sign configurations.archives
-}
+//signing {
+//    sign configurations.archives
+//}
 
 def getMaven = { ->
         def stdout = new ByteArrayOutputStream()
@@ -71,6 +71,7 @@ project.ext.maven = getMaven()
 
 uploadArchives {
     repositories {
+	mavenLocal()
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
