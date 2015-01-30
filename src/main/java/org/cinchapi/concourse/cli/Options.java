@@ -60,7 +60,7 @@ public class Options {
             prefsHandler = ConcourseClientPreferences.load(file);
         }
     }
-    
+
     @Parameter(names = { "--help" }, help = true, hidden = true)
     public boolean help;
 
