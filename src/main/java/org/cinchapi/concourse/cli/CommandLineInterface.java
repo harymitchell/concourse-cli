@@ -54,7 +54,7 @@ public abstract class CommandLineInterface {
     /**
      * Access to {@link #concourse} instance.
      * 
-     * @return
+     * @return concourse
      */
     public final Concourse getConcourse() {
         return concourse;
@@ -206,7 +206,7 @@ public abstract class CommandLineInterface {
     }
 
     /**
-     * Connect to {@value #concourse} with options,
+     * Connect to {@link #concourse} with options,
      * call upon {@link #handleInvalidLogin()} to handle a retry.
      * 
      * @throws IOException
